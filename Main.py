@@ -1,3 +1,14 @@
+import logging
+
+# --- Configuration du système de logs ---
+logging.basicConfig(
+    filename="todo.log",  # nom du fichier où seront écrits les logs
+    level=logging.DEBUG,  # niveau de détail des messages (DEBUG = tout)
+    format="%(asctime)s - [%(levelname)s] - %(message)s"  # format du message
+)
+
+logging.info("Démarrage du gestionnaire de tâches")
+
 taches = []
 
 """Afficher le menu """
