@@ -5,3 +5,9 @@
 2025-10-30 11:56:01,438 - [WARNING] - Numéro invalide lors du marquage : 2
 2025-10-30 12:04:55,037 - [INFO] - Tâche ajoutée : caca
 2025-10-30 12:04:57,146 - [INFO] - Affichage de la liste des tâches.
+2025-10-30 12:08:12,827 - [INFO] - Démarrage du gestionnaire de tâches
+2025-10-30 12:08:21,223 - [INFO] - Tache ajoutee : nettoyage chambre
+2025-10-30 12:08:23,287 - [INFO] - Affichage de la liste des taches.
+2025-10-30 12:08:37,187 - [INFO] - Tache marquee comme faite : nettoyage chambre
+2025-10-30 12:08:44,964 - [INFO] - Tache supprimee : nettoyage chambre
+2025-10-30 12:29:57,429 - [INFO] - Fermeture du programme.
