@@ -1,19 +1,17 @@
 import logging
 
-# --- Configuration du système de logs ---
 logging.basicConfig(
-    filename="todo.log",  # nom du fichier où seront écrits les logs
-    level=logging.DEBUG,  # niveau de détail des messages (DEBUG = tout)
-    format="%(asctime)s - [%(levelname)s] - %(message)s"  # format du message
+    filename="todo.log", 
+    level=logging.DEBUG,  
+    format="%(asctime)s - [%(levelname)s] - %(message)s"  
 )
 
 logging.info("Démarrage du gestionnaire de tâches")
 
 taches = []
 
-"""Afficher le menu """
 def afficher_menu():
-    """Affiche le menu avec les options disponibles pour l'utilisateur"""
+    """Affiche le menu principal du programme"""
     print("\n--- Gestionnaire de Todo ---")
     print("1. Ajouter une tâche")
     print("2. Lister les tâches")
@@ -21,85 +19,90 @@ def afficher_menu():
     print("4. Supprimer une tâche")
     print("5. Quitter")
 
-    """Boucle principale du programme"""
+"""Boucle principale du programme"""
 while True:
-    """Affiche le menu pour chaque tour de boucle"""
     afficher_menu()
-    
-    """choix de l'utilisateur"""
     choix = input("Choix : ")
 
-    """Vérifie si le choix est valide"""
+    """Vérification du choix saisi"""
     if choix not in ["1", "2", "3", "4", "5"]:
-        """Si le choix n'est pas dans le menu affiche un message et continue"""
         print("Choix invalide.")
+        logging.warning(f"Choix invalide saisi : {choix}")
         continue
 
-    """Ajouter une tâche"""
+    """Ajout d'une tâche"""
     if choix == "1":
-        """Demande le nom de la tâche et enleve les espaces inutiles"""
         nom = input("Nouvelle tâche : ").strip()
-        
-        """Si il n'y a rien affiche un message"""
         if not nom:
             print("Le nom de la tâche ne peut pas être vide.")
+            logging.warning("Tentative d'ajout d'une tâche vide.")
         else:
-            """Ajoute la tâche à la liste avec l'état 'faite' à False"""
             taches.append({"nom": nom, "faite": False})
             print("Tâche ajoutée.")
+            logging.info(f"Tâche ajoutée : {nom}")
 
-        """Lister les tâches"""
+        """Affichage de la liste des tâches"""
     elif choix == "2":
-        """S'il n'y a rien affiche un message"""
         if not taches:
             print("Aucune tâche.")
+            logging.info("Affichage des tâches : aucune tâche disponible.")
         else:
-            """Sinon regarde chaque tâche et affiche son numéro avec son état et son nom"""
             for i, t in enumerate(taches, 1):
                 statut = "✅" if t["faite"] else "❌"
                 print(f"{i}. {statut} {t['nom']}")
-   
-        """Marquer une tache comme fait"""
+            logging.info("Affichage de la liste des tâches.")
+
+        """Marquer une tâche comme faite"""
     elif choix == "3":
-        """Si il n'y a rien affiche un message"""
         if not taches:
             print("Aucune tâche à marquer.")
+            logging.warning("Tentative de marquer une tâche alors qu'il n'y en a aucune.")
             continue
         try:
-            """Demande le numéro de la tâche et le convertit en index"""
             i = int(input("Numéro de la tâche : ")) - 1
             if 0 <= i < len(taches):
-                """Change l'état de la tâche à True"""
                 taches[i]["faite"] = True
                 print("Tâche marquée comme faite.")
+                logging.info(f"Tâche marquée comme faite : {taches[i]['nom']}")
             else:
                 print("Numéro de tâche invalide.")
+                logging.warning(f"Numéro invalide lors du marquage : {i + 1}")
         except ValueError:
-            """Si l'entrée n'est pas un nombre affiche un message"""
             print("Entrée non valide.")
+            logging.error("Entrée non numérique lors du marquage d'une tâche.")
+        except Exception as e:
+            print("Erreur inattendue.")
+            logging.critical(f"Erreur critique lors du marquage : {e}")
 
-        """Supprimer une tâche"""
+        """Suppression d'une tâche"""
     elif choix == "4":
         if not taches:
             print("Aucune tâche à supprimer.")
+            logging.warning("Tentative de suppression sans tâches disponibles.")
             continue
         try:
             i = int(input("Numéro à supprimer : ")) - 1
             if 0 <= i < len(taches):
-                """Supprime la tâche choisie et affiche son nom"""
                 supprimee = taches.pop(i)
                 print(f"Tâche supprimée : {supprimee['nom']}")
+                logging.info(f"Tâche supprimée : {supprimee['nom']}")
             else:
                 print("Numéro de tâche invalide.")
+                logging.warning(f"Numéro invalide lors de la suppression : {i + 1}")
         except ValueError:
             print("Entrée non valide.")
+            logging.error("Entrée non numérique lors de la suppression d'une tâche.")
+        except Exception as e:
+            print("Erreur critique pendant la suppression.")
+            logging.critical(f"Erreur critique lors de la suppression : {e}")
 
         """Quitter le programme"""
     elif choix == "5":
-        """Affiche un message et sort de la boucle"""
         print("Au revoir !")
+        logging.info("Fermeture du programme.")
         break
-    
+
+
 def testfonction():
     """cette fonction est une fonction de test"""
     return "test"
